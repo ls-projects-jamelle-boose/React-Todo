@@ -19,41 +19,49 @@ const todos = [
 
 
 const defaultState = {
-  todos: todos
+  todos: todos,
+  task: "",
+  completed: false
 }
 
 class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = defaultState
   }
 
+  changeHandler = event => {
+    this.setState({ [event.target.name]: event.target.value })
+    
+  }
 
-// <TodoList /> receives your Todos array 
+  addTodoHandler = event => {
+    event.preventDefault()
+    let newTodo = {
+      task: this.state.task,
+      id: Date.now(),
+      completed: false
+    }
+    this.setState({
+      todos: [...this.state.todos, newTodo],
+      task: ""
+    })
+  }
 
-// and iterates over the list generating a new <Todo /> for each element in the array.
 
   render() {
     return (
       <div className="App">
         <h2>Welcome to your Todo App!</h2>
-        <TodoList todos={todos}/>
-        <TodoForm />
+        <TodoList todos={this.state.todos}/>
+        <TodoForm 
+        addTodoHandler={this.addTodoHandler}
+        changeHandler={this.changeHandler}
+        task={this.state.task}
+        />
       </div>
     )
   }
 }
 
 export default App;
-
-/* 
-
-        <div className="class-list">
-          {this.state.hogwartsStudents.map(student => (
-            <Student student={student} />
-          ))
-
-*/
