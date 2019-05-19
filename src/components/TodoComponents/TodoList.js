@@ -5,7 +5,7 @@ function TodoList(props) {
   return(
     <div className="Todo-Item">
       {props.todos.map(todo => (
-        <Todo todo={todo} />
+        <Todo todo={todo} toggleTodo={props.toggleTodo}/>
       ))}
     </div>
   )
